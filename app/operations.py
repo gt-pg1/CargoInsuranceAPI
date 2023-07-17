@@ -21,27 +21,35 @@ async def read_file(file_path: str) -> Dict[str, Any]:
         raise
 
 
+async def process_tariff(tariff: Dict[str, Any], date: str) -> Dict[str, int]:
+    rows, updated = 0, 0
+    existing_tariff: Optional[Tariff] = await Tariff.get_or_none(
+        date=date,
+        cargo_type=tariff['cargo_type']
+    )
+    new_rate = float(tariff['rate'])
+    if existing_tariff:
+        if existing_tariff.rate != new_rate:
+            existing_tariff.rate = new_rate
+            await existing_tariff.save()
+            updated += 1
+    else:
+        await Tariff.create(
+            date=date,
+            cargo_type=tariff['cargo_type'],
+            rate=new_rate
+        )
+        rows += 1
+    return {"rows": rows, "updated": updated}
+
+
 async def save_to_db(data: Dict[str, Any]) -> Dict[str, int]:
     rows, updated = 0, 0
     for date, tariffs in data.items():
         for tariff in tariffs:
-            existing_tariff: Optional[Tariff] = await Tariff.get_or_none(
-                date=date,
-                cargo_type=tariff['cargo_type']
-            )
-            new_rate = float(tariff['rate'])
-            if existing_tariff:
-                if existing_tariff.rate != new_rate:
-                    existing_tariff.rate = new_rate
-                    await existing_tariff.save()
-                    updated += 1
-            else:
-                await Tariff.create(
-                    date=date,
-                    cargo_type=tariff['cargo_type'],
-                    rate=new_rate
-                )
-                rows += 1
+            result = await process_tariff(tariff, date)
+            rows += result["rows"]
+            updated += result["updated"]
     return {"rows": rows, "updated": updated}
 
 
