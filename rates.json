@@ -1,0 +1,51 @@
+{
+  "2023-07-10": [
+    {"cargo_type": "Glass", "rate": "0.04"},
+    {"cargo_type": "Wood", "rate": "0.03"},
+    {"cargo_type": "Metal", "rate": "0.05"},
+    {"cargo_type": "Plastic", "rate": "0.02"},
+    {"cargo_type": "Other", "rate": "0.01"}
+  ],
+  "2023-07-11": [
+    {"cargo_type": "Glass", "rate": "0.035"},
+    {"cargo_type": "Wood", "rate": "0.025"},
+    {"cargo_type": "Metal", "rate": "0.055"},
+    {"cargo_type": "Plastic", "rate": "0.022"},
+    {"cargo_type": "Other", "rate": "0.012"}
+  ],
+  "2023-07-12": [
+    {"cargo_type": "Glass", "rate": "0.045"},
+    {"cargo_type": "Wood", "rate": "0.035"},
+    {"cargo_type": "Metal", "rate": "0.050"},
+    {"cargo_type": "Plastic", "rate": "0.020"},
+    {"cargo_type": "Other", "rate": "0.010"}
+  ],
+  "2023-07-13": [
+    {"cargo_type": "Glass", "rate": "0.040"},
+    {"cargo_type": "Wood", "rate": "0.030"},
+    {"cargo_type": "Metal", "rate": "0.052"},
+    {"cargo_type": "Plastic", "rate": "0.023"},
+    {"cargo_type": "Other", "rate": "0.013"}
+  ],
+  "2023-07-14": [
+    {"cargo_type": "Glass", "rate": "0.043"},
+    {"cargo_type": "Wood", "rate": "0.031"},
+    {"cargo_type": "Metal", "rate": "0.053"},
+    {"cargo_type": "Plastic", "rate": "0.025"},
+    {"cargo_type": "Other", "rate": "0.015"}
+  ],
+  "2023-07-15": [
+    {"cargo_type": "Glass", "rate": "0.042"},
+    {"cargo_type": "Wood", "rate": "0.032"},
+    {"cargo_type": "Metal", "rate": "0.054"},
+    {"cargo_type": "Plastic", "rate": "0.026"},
+    {"cargo_type": "Other", "rate": "0.016"}
+  ],
+  "2023-07-16": [
+    {"cargo_type": "Glass", "rate": "0.041"},
+    {"cargo_type": "Wood", "rate": "0.033"},
+    {"cargo_type": "Metal", "rate": "0.055"},
+    {"cargo_type": "Plastic", "rate": "0.027"},
+    {"cargo_type": "Other", "rate": "0.017"}
+  ]
+}
