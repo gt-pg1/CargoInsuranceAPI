@@ -12,6 +12,13 @@ logger = logging.getLogger(__name__)
 
 
 async def read_file(file_path: str) -> Dict[str, Any]:
+    """
+    Read JSON file
+
+    :param file_path: File path
+    :return: Dictionary with data from the file
+    :raises: Error when reading the file
+    """
     try:
         with open(file_path, 'r') as file:
             data: Dict[str, Any] = json.load(file)
@@ -22,6 +29,13 @@ async def read_file(file_path: str) -> Dict[str, Any]:
 
 
 async def process_tariff(tariff: Dict[str, Any], date: str) -> Dict[str, int]:
+    """
+    Process each tariff. Create new records or update existing ones.
+
+    :param tariff: Dictionary with tariff information
+    :param date: Tariff date
+    :return: Dictionary with the number of new and updated records
+    """
     rows, updated = 0, 0
     existing_tariff: Optional[Tariff] = await Tariff.get_or_none(
         date=date,
@@ -44,6 +58,12 @@ async def process_tariff(tariff: Dict[str, Any], date: str) -> Dict[str, int]:
 
 
 async def save_to_db(data: Dict[str, Any]) -> Dict[str, int]:
+    """
+    Save data to the database.
+
+    :param data: Dictionary with data to be saved
+    :return: Dictionary with the total number of new and updated records
+    """
     rows, updated = 0, 0
     for date, tariffs in data.items():
         for tariff in tariffs:
@@ -54,6 +74,13 @@ async def save_to_db(data: Dict[str, Any]) -> Dict[str, int]:
 
 
 async def str_to_date(date_str: str) -> datetime.date:
+    """
+    Convert a date string to a datetime.date object
+
+    :param date_str: Date string in the format YYYY-MM-DD
+    :return: datetime.date object
+    :raises: Error when the date format is incorrect
+    """
     try:
         date_object = datetime.strptime(date_str, '%Y-%m-%d').date()
         return date_object
