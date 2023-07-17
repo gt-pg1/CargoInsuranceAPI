@@ -1,4 +1,5 @@
 import os
+import logging
 from dotenv import load_dotenv
 
 from fastapi import FastAPI
@@ -6,6 +7,12 @@ from fastapi import FastAPI
 from tortoise.contrib.fastapi import register_tortoise
 
 from app.routes import router as api_router
+
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s %(levelname)s %(name)s %(threadName)s : %(message)s'
+)
+logger = logging.getLogger(__name__)
 
 load_dotenv()
 
