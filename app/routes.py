@@ -1,4 +1,6 @@
+import os
 import json
+import logging
 from datetime import datetime
 
 from fastapi import HTTPException, Depends
@@ -8,12 +10,20 @@ from app.models import Tariff
 from app.schemas import InsuranceInput
 
 router = APIRouter()
+logger = logging.getLogger(__name__)
 
 
 @router.post("/loaddata")
-async def load_data():
+async def load_data(json_file: str = os.getenv('RATES_FILE')):
+    """
+    Load the data from the provided json file into the database.
+
+    :param json_file: The file to load the data from.
+    :return: A dict containing the status of the operation.
+    """
+
     try:
-        with open('rates.json') as f:
+        with open(json_file) as f:
             data = json.load(f)
 
         rows = 0
@@ -35,17 +45,20 @@ async def load_data():
                         rate=float(tariff['rate'])
                     )
                     rows += 1
-        text = f"Data loaded successfully. " \
-               f"Written {rows} new records, {updated} records updated."
+
+        text = f"Data loaded successfully. Written {rows} new records, {updated} records updated."
         return {"status": text}
+
     except Exception as e:
-        print(f"Failed to load data: {e}")
+        logger.error(f"Failed to load data: {e}")
+        raise
 
 
 @router.get("/calculate_insurance")
 async def calculate_insurance(insurance_input: InsuranceInput = Depends()):
     """
     Calculate the insurance based on the input parameters.
+
     :param insurance_input: The input parameters.
     :return: A dict containing the calculated insurance cost.
     """

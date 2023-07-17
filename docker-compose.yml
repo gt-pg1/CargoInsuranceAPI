@@ -8,6 +8,8 @@ services:
       - .:/app
     ports:
       - "8000:8000"
+    environment:
+      - RATES_FILE=${RATES_FILE}
     depends_on:
       - db
 
@@ -15,9 +17,9 @@ services:
     image: postgres:13
     restart: always
     environment:
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: admin
-      POSTGRES_DB: CargoInsurance
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
     volumes:
       - ./data/db:/var/lib/postgresql/data
     ports:
