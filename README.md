@@ -27,7 +27,9 @@ git clone https://github.com/gt-pg1/CargoInsuranceAPI
     Здесь `RATES_FILE` - это путь к JSON-файлу с тарифами.
 
 
-3.  Запуск сервиса с помощью Docker Compose:
+3.  Запуск сервиса с помощью Docker Compose (docker service должен быть запущен в системе):
+
+    _Перед запуском нужно убедиться, что 5432 порт свободен._
 
 ```bash
 sudo docker-compose up
