@@ -31,6 +31,8 @@ git clone https://github.com/gt-pg1/CargoInsuranceAPI
 
     _Перед запуском нужно убедиться, что 5432 порт свободен._
 
+    _Перед запуском нужно убедиться, что 5432 порт свободен._
+
 ```bash
 sudo docker-compose up
 ```
