@@ -11,7 +11,27 @@ import json
 logger = logging.getLogger(__name__)
 
 
-async def read_file(file_path: str) -> Dict[str, Any]:
+def validate_json(data: Dict[str, Any]) -> None:
+    """
+    Validate the structure of JSON data.
+
+    :param data: JSON data to validate
+    :raises ValueError: If the JSON structure is invalid
+    """
+    if not isinstance(data, dict):
+        raise ValueError("Invalid JSON structure: Root should be a dictionary")
+
+    for key, value in data.items():
+        if not isinstance(key, str):
+            raise ValueError("Invalid JSON structure: Date should be a string")
+        if not isinstance(value, list):
+            raise ValueError("Invalid JSON structure: Tariffs should be a list")
+        for tariff in value:
+            if not isinstance(tariff, dict) or not all(k in tariff for k in ['cargo_type', 'rate']):
+                raise ValueError("Invalid JSON structure: Tariff should be a dictionary with 'cargo_type' and 'rate'")
+
+
+def read_file(file_path: str) -> Dict[str, Any]:
     """
     Read JSON file
 
@@ -22,10 +42,14 @@ async def read_file(file_path: str) -> Dict[str, Any]:
     try:
         with open(file_path, 'r') as file:
             data: Dict[str, Any] = json.load(file)
+            validate_json(data)
         return data
     except FileNotFoundError:
         logger.error(f"File not found: {file_path}")
         raise
+    except json.JSONDecodeError as e:
+        logger.error(f"Could not parse the JSON file: {file_path}, error: {str(e)}")
+        raise ValueError(f"Invalid JSON format in the file: {file_path}")
 
 
 async def process_tariff(tariff: Dict[str, Any], date: str) -> Dict[str, int]:

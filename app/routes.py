@@ -21,10 +21,13 @@ async def load_data(json_file: str = os.getenv('RATES_FILE')) -> Dict[str, str]:
     :param json_file: Path to the JSON file
     :return: Load status
     """
-    data = await operations.read_file(json_file)
-    results = await operations.save_to_db(data)
-    text = f"Data loaded successfully. Written {results['rows']} new records, {results['updated']} records updated."
-    return {"status": text}
+    try:
+        data = operations.read_file(json_file)
+        results = await operations.save_to_db(data)
+        text = f"Data loaded successfully. Written {results['rows']} new records, {results['updated']} records updated."
+        return {"status": text}
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
 
 
 @router.get("/calculate_insurance", tags=["Calculation of the cost of insurance"])
